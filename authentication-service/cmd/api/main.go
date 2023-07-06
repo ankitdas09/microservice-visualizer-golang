@@ -22,16 +22,17 @@ type Config struct {
 }
 
 func main() {
-	log.Println("Starting authentication service")
+	// log.Println("Starting authentication service")
 
-	conn := connectToDB()
-	if conn == nil {
-		log.Panic("Cannot connect to postgres!")
-	}
+	// conn := connectToDB()
+	// if conn == nil {
+	// 	log.Panic("Cannot connect to postgres!")
+	// }
 
+	log.Println("Authentication service running!")
 	app := Config{
-		DB:     conn,
-		Models: data.New(conn),
+		// DB:     conn,
+		// Models: data.New(conn),
 	}
 
 	server := &http.Server{
@@ -56,9 +57,10 @@ func openDB(dsn string) (*sql.DB, error) {
 	return db, nil
 }
 
+var count int64
+
 func connectToDB() *sql.DB {
 	dsn := os.Getenv("DSN")
-	count := 0
 	for {
 		connection, err := openDB(dsn)
 		if err != nil {
