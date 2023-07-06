@@ -22,23 +22,23 @@ type Config struct {
 }
 
 func main() {
-	// log.Println("Starting authentication service")
+	log.Println("Starting authentication service")
 
-	// conn := connectToDB()
-	// if conn == nil {
-	// 	log.Panic("Cannot connect to postgres!")
-	// }
+	conn := connectToDB()
+	if conn == nil {
+		log.Panic("Cannot connect to postgres!")
+	}
 
-	log.Println("Authentication service running!")
 	app := Config{
-		// DB:     conn,
-		// Models: data.New(conn),
+		DB:     conn,
+		Models: data.New(conn),
 	}
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%s", webPort),
 		Handler: app.routes(),
 	}
+	log.Println("Authentication service running!")
 	err := server.ListenAndServe()
 	if err != nil {
 		log.Panic(err)
